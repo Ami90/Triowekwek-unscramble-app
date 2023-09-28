@@ -48,9 +48,9 @@ class GameFragment : Fragment() {
     ): View {
         // Inflate the layout XML file and return a binding object instance
         binding = GameFragmentBinding.inflate(inflater, container, false)
-        return binding.root
         Log.d("GameFragment", "Word: ${viewModel.currentScrambleWord} " +
                 "Score: ${viewModel.score} WordCount: ${viewModel.currentWorldCount}")
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
