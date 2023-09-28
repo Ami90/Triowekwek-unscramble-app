@@ -1,20 +1,22 @@
 package com.example.android.unscramble.ui.game
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 //
 
 class GameViewModel : ViewModel() {
-    private var _score = 0
-    val score: Int
+    private val _score = MutableLiveData(0)
+    val score: LiveData<Int>
         get() = _score
 
-    private var _currentWordCount = 0
-    val currentWorldCount: Int
+    private val _currentWordCount = MutableLiveData(0)
+    val currentWorldCount: LiveData<Int>
         get() = _currentWordCount
 
-    private lateinit var _currentScrambledWord: String
-    val currentScrambleWord: String
+    private val _currentScrambledWord = MutableLiveData<String>()
+    val currentScrambleWord: LiveData<String>
         get() = _currentScrambledWord
 
     private var wordsList: MutableList<String> = mutableListOf()
@@ -41,19 +43,18 @@ class GameViewModel : ViewModel() {
         if (wordsList.contains(currentWord)) {
             getNextWord()
         } else {
-            _currentScrambledWord = String(tempWord)
-            ++this._currentWordCount
+            _currentScrambledWord.value = String(tempWord)
             wordsList.add(currentWord)
         }
     }
     fun reinitializeData() {
-        _score = 0
-        _currentWordCount = 0
+        _score.value = 0
+        _currentWordCount.value = 0
         wordsList.clear()
         getNextWord()
     }
     private fun increaseScore(){
-        _score += SCORE_INCREASE
+        _score.value = (_score.value)?.plus(SCORE_INCREASE)
     }
     fun isUserWordCorrect(playerWord: String): Boolean {
         if (playerWord.equals(currentWord, true)) {
@@ -63,7 +64,7 @@ class GameViewModel : ViewModel() {
         return false
     }
     fun nextWord(): Boolean {
-        return if (this._currentWordCount < MAX_NO_OF_WORDS) {
+        return if (this._currentWordCount.value!! < MAX_NO_OF_WORDS) {
             getNextWord()
             true
         } else false
