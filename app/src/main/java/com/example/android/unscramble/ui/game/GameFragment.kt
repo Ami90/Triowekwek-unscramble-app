@@ -91,7 +91,7 @@ class GameFragment : Fragment() {
 //        currentWordCount++
 //        binding.wordCount.text = getString(R.string.word_count, currentWordCount, MAX_NO_OF_WORDS)
 //        setErrorTextField(false)
-//        updateNextWordOnScreen()
+//       updateNextWordOnScreen()
     }
 
     /*
